@@ -1,4 +1,4 @@
-package com.example.learningkotlin.ui.adapters
+package com.example.learningkotlin.contacts
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -31,9 +31,11 @@ class ContactsAdapter(private val contacts: List<Contact>) : RecyclerView.Adapte
 
     class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(contact: Contact) {
-            itemView.nameTextView.text = contact.name
-            itemView.sexTextView.text = contact.sex.toString()
-            itemView.ageTextView.text = contact.age.toString()
+            with(contact) {
+                itemView.nameTextView.text = name
+                itemView.sexTextView.text = sex.toString()
+                itemView.ageTextView.text = age.toString()
+            }
         }
     }
 }
