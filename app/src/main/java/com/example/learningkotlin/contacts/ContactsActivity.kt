@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.learningkotlin.R
 import com.example.learningkotlin.data.models.Contact
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 
@@ -15,7 +15,7 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_contacts)
 
         mPresenter = ContactsPresenter(this)
 
