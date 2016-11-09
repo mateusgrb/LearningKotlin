@@ -7,19 +7,17 @@ import com.example.learningkotlin.R
 import com.example.learningkotlin.data.models.Contact
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
-    var mPresenter: ContactsContract.Presenter? = null
+    val mPresenter: ContactsContract.Presenter = ContactsPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
-        mPresenter = ContactsPresenter(this)
-
-        val contact1 = Contact("Ruan Rabelo", 34, "http://pngimg.com/upload/face_PNG5660.png", Contact.Sex.MALE)
+        val contact1 = Contact("Ruan Rabelo", 134, "http://pngimg.com/upload/face_PNG5660.png",
+                Contact.Sex.MALE)
         val contact2 = Contact("Julia Cigana", 29, "http://pngimg.com/upload/face_PNG5646.png",
                 Contact.Sex.FEMALE)
         val contact3 = Contact("Rafaela Maria", 39, "http://www.taylorherring" +
@@ -31,15 +29,11 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         contactsList.setHasFixedSize(true)
         contactsList.adapter = adapter
 
-        floatingActionButton.onClick { toast("Soon") }
+        floatingActionButton.onClick { mPresenter.addNewContact() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter?.onDestroy()
-    }
-
-    override fun setPresenter(presenter: ContactsContract.Presenter) {
-        mPresenter = presenter
+        mPresenter.onDestroy()
     }
 }
