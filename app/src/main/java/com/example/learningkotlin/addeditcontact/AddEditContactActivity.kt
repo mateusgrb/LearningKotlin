@@ -9,14 +9,14 @@ import org.jetbrains.anko.onClick
 
 class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View {
 
-    val mPresenter = AddEditContactPresenter(this)
+    private val presenter = AddEditContactPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_contact)
 
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout
-                .simple_spinner_item, mPresenter.getSexValues())
+                .simple_spinner_item, presenter.getSexValues())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sexSpinner.adapter = adapter
         saveButton.onClick { }

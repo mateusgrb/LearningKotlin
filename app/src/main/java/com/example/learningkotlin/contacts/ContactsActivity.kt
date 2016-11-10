@@ -10,7 +10,7 @@ import org.jetbrains.anko.onClick
 
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
-    val mPresenter: ContactsContract.Presenter = ContactsPresenter(this)
+    private val presenter: ContactsContract.Presenter = ContactsPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +29,11 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         contactsList.setHasFixedSize(true)
         contactsList.adapter = adapter
 
-        floatingActionButton.onClick { mPresenter.addNewContact() }
+        floatingActionButton.onClick { presenter.addNewContact() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.onDestroy()
+        presenter.onDestroy()
     }
 }
