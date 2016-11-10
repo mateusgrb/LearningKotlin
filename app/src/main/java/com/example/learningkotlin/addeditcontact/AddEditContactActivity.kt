@@ -1,11 +1,16 @@
 package com.example.learningkotlin.addeditcontact
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import com.example.learningkotlin.R
 import kotlinx.android.synthetic.main.activity_add_edit_contact.*
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.onEditorAction
 
 class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View {
 
@@ -19,6 +24,28 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
                 .simple_spinner_item, presenter.getSexValues())
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sexSpinner.adapter = adapter
+        sexSpinner.isFocusable = true
+        sexSpinner.isFocusableInTouchMode = true
+
+        ageEditText.onEditorAction { textView, i, keyEvent -> checkNextFocus(i) }
         saveButton.onClick { }
+    }
+
+    private fun checkNextFocus(actionId: Int): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+            hideKeyboard()
+            sexSpinner.requestFocus()
+            return true
+        }
+        return false
+    }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = currentFocus
+        if (view == null) {
+            view = View(this)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
