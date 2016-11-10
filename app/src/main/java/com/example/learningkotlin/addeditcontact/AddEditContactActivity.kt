@@ -11,6 +11,7 @@ import com.example.learningkotlin.R
 import kotlinx.android.synthetic.main.activity_add_edit_contact.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.onEditorAction
+import org.jetbrains.anko.toast
 
 class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View {
 
@@ -28,7 +29,28 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         sexSpinner.isFocusableInTouchMode = true
 
         ageEditText.onEditorAction { textView, i, keyEvent -> checkNextFocus(i) }
-        saveButton.onClick { }
+        saveButton.onClick {
+            presenter.saveContact(nameEditText.text.toString(), ageEditText.text
+                    .toString(), sexSpinner.selectedItem.toString())
+        }
+    }
+
+    override fun showContactNameError() {
+        with(nameEditText) {
+            error = getString(R.string.name_error)
+            requestFocus()
+        }
+    }
+
+    override fun showContactAgeError() {
+        with(ageEditText) {
+            error = getString(R.string.age_error)
+            requestFocus()
+        }
+    }
+
+    override fun showContactSexError() {
+        toast(getString(R.string.sex_error))
     }
 
     private fun checkNextFocus(actionId: Int): Boolean {

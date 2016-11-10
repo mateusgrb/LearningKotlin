@@ -1,18 +1,15 @@
 package com.example.learningkotlin.contacts
 
-import com.example.learningkotlin.addeditcontact.AddEditContactActivity
-import org.jetbrains.anko.startActivity
-
 /**
  * Created by mateus on 08/11/16.
  */
-class ContactsPresenter(private var activity: ContactsActivity?) : ContactsContract.Presenter {
+class ContactsPresenter(private var view: ContactsContract.View?) : ContactsContract.Presenter {
 
     override fun onDestroy() {
-        activity = null
+        view = null
     }
 
     override fun addNewContact() {
-        activity?.startActivity<AddEditContactActivity>()
+        view?.showAddContactScreen()
     }
 }

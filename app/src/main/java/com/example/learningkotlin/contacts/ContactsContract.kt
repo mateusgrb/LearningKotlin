@@ -9,7 +9,10 @@ import com.example.learningkotlin.BaseView
 
 interface ContactsContract {
 
-    interface View : BaseView<Presenter>
+    interface View : BaseView<Presenter> {
+
+        fun showAddContactScreen()
+    }
 
     interface Presenter : BasePresenter {
 

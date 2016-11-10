@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.learningkotlin.R
+import com.example.learningkotlin.addeditcontact.AddEditContactActivity
 import com.example.learningkotlin.data.models.Contact
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
+import org.jetbrains.anko.startActivity
 
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
@@ -35,5 +37,9 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+    }
+
+    override fun showAddContactScreen() {
+        startActivity<AddEditContactActivity>()
     }
 }
