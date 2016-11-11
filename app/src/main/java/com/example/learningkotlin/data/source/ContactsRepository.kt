@@ -10,8 +10,8 @@ class ContactsRepository : ContactsDataSource {
 
     val localDataSource: ContactsDataSource = ContactsLocalDataSource()
 
-    override fun insertContact() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun insertContact(name: String, age: Int, sex: String) {
+        localDataSource.insertContact(name, age, sex)
     }
 
     override fun getContacts(): List<Contact> {

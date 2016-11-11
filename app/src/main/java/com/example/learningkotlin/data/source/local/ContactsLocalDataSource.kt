@@ -1,24 +1,31 @@
 package com.example.learningkotlin.data.source.local
 
 import com.example.learningkotlin.data.models.Contact
+import com.example.learningkotlin.data.models.ContactRealm
 import com.example.learningkotlin.data.source.ContactsDataSource
+import io.realm.Realm
 
 /**
  * Created by mateus on 10/11/16.
  */
 class ContactsLocalDataSource : ContactsDataSource {
 
-    override fun insertContact() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun insertContact(name: String, age: Int, sex: String) {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            val contact = realm.createObject(ContactRealm::class.java)
+            contact.name = name
+            contact.age = age
+            contact.sex = sex
+        }
+        realm.close()
     }
 
     override fun getContacts(): List<Contact> {
-        val contact1 = Contact("Ruan Rabelo", 134, "http://pngimg.com/upload/face_PNG5660.png",
-                Contact.Sex.MALE)
-        val contact2 = Contact("Julia Cigana", 29, "http://pngimg.com/upload/face_PNG5646.png",
-                Contact.Sex.FEMALE)
-        val contact3 = Contact("Rafaela Maria", 39, "http://www.taylorherring" +
-                ".com/blog/wp-content/uploads/2015/03/Archetypal-Female-Face-of-Beauty-embargoed-to-00.01hrs-30.03.15.jpg", Contact.Sex.FEMALE)
-        return listOf(contact1, contact2, contact3)
+        val realm = Realm.getDefaultInstance()
+        val results = realm.where(ContactRealm::class.java).findAll()
+        val detachedResults = realm.copyFromRealm(results)
+        realm.close()
+        return detachedResults
     }
 }

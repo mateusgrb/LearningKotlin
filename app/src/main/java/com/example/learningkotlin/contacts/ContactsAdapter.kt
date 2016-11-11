@@ -33,7 +33,7 @@ class ContactsAdapter(private val contacts: List<Contact>) : RecyclerView.Adapte
         fun bind(contact: Contact) {
             with(contact) {
                 itemView.nameTextView.text = name
-                itemView.sexTextView.text = sex.toString()
+                itemView.sexTextView.text = sex
                 itemView.ageTextView.text = age.toString()
             }
         }

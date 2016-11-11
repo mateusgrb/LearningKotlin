@@ -13,6 +13,7 @@ interface AddEditContactContract {
         fun showContactNameError()
         fun showContactAgeError()
         fun showContactSexError()
+        fun onContactSaved()
     }
 
     interface Presenter : BasePresenter {

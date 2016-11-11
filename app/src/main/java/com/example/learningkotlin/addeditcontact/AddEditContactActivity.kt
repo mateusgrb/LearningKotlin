@@ -53,6 +53,10 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         toast(getString(R.string.sex_error))
     }
 
+    override fun onContactSaved() {
+        finish()
+    }
+
     private fun checkNextFocus(actionId: Int): Boolean {
         if (actionId == EditorInfo.IME_ACTION_NEXT) {
             hideKeyboard()
