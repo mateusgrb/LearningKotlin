@@ -17,7 +17,9 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
-        val adapter = ContactsAdapter(presenter.getContacts())
+        val adapter = ContactsAdapter(presenter.getContacts()) {
+            startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to it)
+        }
 
         contactsList.layoutManager = LinearLayoutManager(this)
         contactsList.setHasFixedSize(true)

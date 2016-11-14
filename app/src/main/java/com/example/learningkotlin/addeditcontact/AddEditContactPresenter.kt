@@ -12,6 +12,7 @@ class AddEditContactPresenter(private var view: AddEditContactContract.View?) :
         AddEditContactContract.Presenter {
 
     val repository: ContactsRepository = ContactsRepository()
+    var contactId: Long? = null
 
     override fun getSexValues(): List<String> {
         return Contact.Sex.values().map { it.toString() }
@@ -25,7 +26,12 @@ class AddEditContactPresenter(private var view: AddEditContactContract.View?) :
         } else if (!Validator.validateContactSex(sex)) {
             view?.showContactSexError()
         } else {
-            repository.insertContact(name, age.toInt(), sex)
+            val contactId = this.contactId
+            if (contactId != null) {
+                repository.updateContact(contactId, name, age.toInt(), sex)
+            } else {
+                repository.insertContact(name, age.toInt(), sex)
+            }
             view?.onContactSaved()
         }
     }

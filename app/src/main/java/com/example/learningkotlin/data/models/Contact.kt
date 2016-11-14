@@ -1,12 +1,13 @@
 package com.example.learningkotlin.data.models
 
-import io.realm.RealmObject
+import java.io.Serializable
 
 /**
  * Created by mateus on 04/11/16.
  */
-interface Contact {
+interface Contact : Serializable {
 
+    var id: Long
     var name: String
     var age: Int
     var pictureUrl: String

@@ -8,12 +8,17 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import com.example.learningkotlin.R
+import com.example.learningkotlin.data.models.Contact
 import kotlinx.android.synthetic.main.activity_add_edit_contact.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.onEditorAction
 import org.jetbrains.anko.toast
 
 class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View {
+
+    companion object {
+        val EXTRA_CONTACT = "CONTACT"
+    }
 
     private val presenter = AddEditContactPresenter(this)
 
@@ -32,6 +37,14 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         saveButton.onClick {
             presenter.saveContact(nameEditText.text.toString(), ageEditText.text
                     .toString(), sexSpinner.selectedItem.toString())
+        }
+
+        val contact = intent.getSerializableExtra(EXTRA_CONTACT) as Contact?
+        if (contact != null) {
+            presenter.contactId = contact.id
+            nameEditText.setText(contact.name)
+            ageEditText.setText(contact.age.toString())
+            sexSpinner.setSelection(adapter.getPosition(contact.sex))
         }
     }
 
