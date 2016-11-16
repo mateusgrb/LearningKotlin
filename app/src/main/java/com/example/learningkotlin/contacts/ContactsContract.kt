@@ -19,5 +19,6 @@ interface ContactsContract {
 
         fun addNewContact()
         fun getContacts(): List<Contact>
+        fun deleteContacts(contactsToBeDeleted: List<Contact>)
     }
 }

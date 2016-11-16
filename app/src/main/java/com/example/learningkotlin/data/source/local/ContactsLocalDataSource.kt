@@ -37,6 +37,16 @@ class ContactsLocalDataSource : ContactsDataSource {
         return detachedResults
     }
 
+    override fun deleteContacts(contacts: List<Contact>) {
+        val ids = contacts.map { it.id }
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            realm.where(ContactRealm::class.java).`in`(ContactRealm.ID, ids.toTypedArray())
+                    .findAll().deleteAllFromRealm()
+        }
+        realm.close()
+    }
+
     private fun setContactFields(contact: ContactRealm?, name: String, age: Int, sex: String) {
         contact?.name = name
         contact?.age = age

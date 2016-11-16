@@ -21,4 +21,8 @@ class ContactsPresenter(private var view: ContactsContract.View?) : ContactsCont
     override fun getContacts(): List<Contact> {
         return repository.getContacts()
     }
+
+    override fun deleteContacts(contacts: List<Contact>) {
+        repository.deleteContacts(contacts)
+    }
 }

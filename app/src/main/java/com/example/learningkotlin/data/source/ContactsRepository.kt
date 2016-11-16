@@ -20,4 +20,8 @@ class ContactsRepository : ContactsDataSource {
     override fun getContacts(): List<Contact> {
         return localDataSource.getContacts()
     }
+
+    override fun deleteContacts(contacts: List<Contact>) {
+        localDataSource.deleteContacts(contacts)
+    }
 }

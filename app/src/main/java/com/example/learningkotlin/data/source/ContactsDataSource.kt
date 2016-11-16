@@ -10,4 +10,5 @@ interface ContactsDataSource {
     fun insertContact(name: String, age: Int, sex: String)
     fun updateContact(id: Long, name: String, age: Int, sex: String)
     fun getContacts(): List<Contact>
+    fun deleteContacts(contacts: List<Contact>)
 }
