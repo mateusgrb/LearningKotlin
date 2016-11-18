@@ -5,5 +5,6 @@ The aim of this project is to learn Kotlin and get familiar with other Android-r
 - MVP Architecture
 - Realm
 - ConstraintLayout
+- EventBus
 - RxJava
 - Unit/UI tests
