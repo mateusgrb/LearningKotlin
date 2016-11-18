@@ -14,11 +14,14 @@ import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 
+
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
     private val presenter: ContactsContract.Presenter = ContactsPresenter(this)
     private var actionMode: ActionMode? = null
-    private var adapter = ContactsAdapter(presenter.getContacts(), {
+    private val contacts = presenter.getContacts() as MutableList<Contact>
+
+    private var adapter = ContactsAdapter(contacts, {
         actionMode ?: startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to
                 it)
     }, { contact -> handleOnLongClick(contact) })
@@ -71,6 +74,12 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
     override fun showAddContactScreen() {
         startActivity<AddEditContactActivity>()
+    }
+
+    override fun refreshList(updatedContacts: List<Contact>) {
+        contacts.clear()
+        contacts.addAll(updatedContacts)
+        adapter.notifyDataSetChanged()
     }
 
     private fun handleOnLongClick(contact: Contact) {

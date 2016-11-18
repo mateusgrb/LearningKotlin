@@ -13,6 +13,7 @@ interface ContactsContract {
     interface View : BaseView<Presenter> {
 
         fun showAddContactScreen()
+        fun refreshList(contacts: List<Contact>)
     }
 
     interface Presenter : BasePresenter {

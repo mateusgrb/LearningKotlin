@@ -2,6 +2,10 @@ package com.example.learningkotlin.contacts
 
 import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.ContactsRepository
+import com.example.learningkotlin.events.RefreshListEvent
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by mateus on 08/11/16.
@@ -10,7 +14,12 @@ class ContactsPresenter(private var view: ContactsContract.View?) : ContactsCont
 
     val repository: ContactsRepository = ContactsRepository()
 
+    init {
+        EventBus.getDefault().register(this)
+    }
+
     override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
         view = null
     }
 
@@ -24,5 +33,11 @@ class ContactsPresenter(private var view: ContactsContract.View?) : ContactsCont
 
     override fun deleteContacts(contacts: List<Contact>) {
         repository.deleteContacts(contacts)
+        view?.refreshList(getContacts())
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRefreshListEvent(event: RefreshListEvent) {
+        view?.refreshList(getContacts())
     }
 }

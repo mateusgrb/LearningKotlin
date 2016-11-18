@@ -2,7 +2,9 @@ package com.example.learningkotlin.addeditcontact
 
 import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.ContactsRepository
+import com.example.learningkotlin.events.RefreshListEvent
 import com.example.learningkotlin.utils.Validator
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by mateus on 09/11/16.
@@ -32,6 +34,7 @@ class AddEditContactPresenter(private var view: AddEditContactContract.View?) :
             } else {
                 repository.insertContact(name, age.toInt(), sex)
             }
+            EventBus.getDefault().post(RefreshListEvent())
             view?.onContactSaved()
         }
     }
