@@ -1,6 +1,7 @@
 package com.example.learningkotlin.contacts
 
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -67,7 +68,8 @@ class ContactsAdapter(val contacts: List<Contact>, val itemClick: (Contact) -> U
                 itemView.ageTextView.text = age.toString()
                 itemView.onClick { itemClick(this, adapterPosition) }
                 itemView.onLongClick { itemLongClick(this, adapterPosition); true }
-                itemView.backgroundColor = if (selected) Color.GREEN else Color.TRANSPARENT
+                itemView.backgroundColor = if (selected) ContextCompat.getColor(itemView.context,
+                        R.color.colorSelected) else Color.TRANSPARENT
             }
         }
     }
