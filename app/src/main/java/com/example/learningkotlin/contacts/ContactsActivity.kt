@@ -13,13 +13,19 @@ import com.example.learningkotlin.data.models.Contact
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
+import java.util.*
 
 
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
 
+    companion object {
+        val EXTRA_IS_IN_ACTION_MODE = "IS_IN_ACTION_MODE"
+        val EXTRA_SELECTED_POSITIONS = "SELECTED_POSITIONS"
+    }
+
     private val presenter: ContactsContract.Presenter = ContactsPresenter(this)
     private var actionMode: ActionMode? = null
-    private val contacts = presenter.getContacts() as MutableList<Contact>
+    private val contacts = presenter.getContacts().toMutableList()
 
     private var adapter = ContactsAdapter(contacts, {
         actionMode ?: startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to
@@ -70,6 +76,29 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState?.getBoolean(EXTRA_IS_IN_ACTION_MODE) ?: false) {
+            actionMode = startActionMode(callback)
+            adapter.actionModeEnabled = true
+            savedInstanceState?.getIntegerArrayList(EXTRA_SELECTED_POSITIONS)?.forEach {
+                adapter.selected.put(it, true)
+            }
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        if (actionMode != null) {
+            outState?.putBoolean(EXTRA_IS_IN_ACTION_MODE, true)
+            val selectedPositions = (0..adapter.selected.size())
+                    .filter { adapter.selected.valueAt(it) }
+                    .mapTo(ArrayList<Int>()) { adapter.selected.keyAt(it) }
+            outState?.putIntegerArrayList(EXTRA_SELECTED_POSITIONS, selectedPositions)
+        }
     }
 
     override fun showAddContactScreen() {
