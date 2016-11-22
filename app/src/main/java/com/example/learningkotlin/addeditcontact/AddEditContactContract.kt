@@ -11,13 +11,12 @@ interface AddEditContactContract {
 
     interface View : BaseView<Presenter> {
         fun showContactNameError()
-        fun showContactAgeError()
-        fun showContactSexError()
+        fun showContactEmailError()
+        fun showContactPhoneError()
         fun onContactSaved()
     }
 
     interface Presenter : BasePresenter {
-        fun getSexValues(): List<String>
-        fun saveContact(name: String, age: String, sex: String)
+        fun saveContact(name: String, email: String, phone: String)
     }
 }

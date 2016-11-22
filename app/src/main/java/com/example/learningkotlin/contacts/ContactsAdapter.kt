@@ -64,8 +64,7 @@ class ContactsAdapter(val contacts: List<Contact>, val itemClick: (Contact) -> U
         fun bind(contact: Contact, selected: Boolean) {
             with(contact) {
                 itemView.nameTextView.text = name
-                itemView.sexTextView.text = sex
-                itemView.ageTextView.text = age.toString()
+                itemView.emailTextView.text = email
                 itemView.onClick { itemClick(this, adapterPosition) }
                 itemView.onLongClick { itemLongClick(this, adapterPosition); true }
                 itemView.backgroundColor = if (selected) ContextCompat.getColor(itemView.context,

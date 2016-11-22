@@ -9,11 +9,7 @@ interface Contact : Serializable {
 
     var id: Long
     var name: String
-    var age: Int
+    var email: String
+    var phone: String
     var pictureUrl: String
-    var sex: String
-
-    enum class Sex {
-        MALE, FEMALE
-    }
 }

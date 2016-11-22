@@ -9,12 +9,12 @@ import com.example.learningkotlin.data.source.local.ContactsLocalDataSource
 class ContactsRepository : ContactsDataSource {
     val localDataSource: ContactsDataSource = ContactsLocalDataSource()
 
-    override fun insertContact(name: String, age: Int, sex: String) {
-        localDataSource.insertContact(name, age, sex)
+    override fun insertContact(name: String, email: String, phone: String) {
+        localDataSource.insertContact(name, email, phone)
     }
 
-    override fun updateContact(id: Long, name: String, age: Int, sex: String) {
-        localDataSource.updateContact(id, name, age, sex)
+    override fun updateContact(id: Long, name: String, email: String, phone: String) {
+        localDataSource.updateContact(id, name, email, phone)
     }
 
     override fun getContacts(): List<Contact> {

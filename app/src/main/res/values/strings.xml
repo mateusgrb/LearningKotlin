@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name">Learning Kotlin</string>
     <string name="name">Name</string>
-    <string name="age">Age</string>
-    <string name="sex">Sex</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone Number</string>
     <string name="save">Save</string>
     <string name="delete_contacts">Delete contacts</string>
 
-    <string name="name_error">Please, fill in a valid name</string>
-    <string name="age_error">Please, fill in a valid age</string>
-    <string name="sex_error">Please, select a valid sex</string>
+    <string name="field_error">Please, fill in a valid %1$s</string>
 </resources>

@@ -10,22 +10,22 @@ import io.realm.Realm
  */
 class ContactsLocalDataSource : ContactsDataSource {
 
-    override fun insertContact(name: String, age: Int, sex: String) {
+    override fun insertContact(name: String, email: String, phone: String) {
         val realm = Realm.getDefaultInstance()
         val max: Number? = realm.where(ContactRealm::class.java).max(ContactRealm.ID)
         val primaryKey = max?.toLong()?.plus(1) ?: 1
         realm.executeTransaction {
             val contact = realm.createObject(ContactRealm::class.java, primaryKey)
-            setContactFields(contact, name, age, sex)
+            setContactFields(contact, name, email, phone)
         }
         realm.close()
     }
 
-    override fun updateContact(id: Long, name: String, age: Int, sex: String) {
+    override fun updateContact(id: Long, name: String, email: String, phone: String) {
         val realm = Realm.getDefaultInstance()
         val contact: ContactRealm? = realm.where(ContactRealm::class.java).equalTo(ContactRealm
                 .ID, id).findFirst()
-        realm.executeTransaction { setContactFields(contact, name, age, sex) }
+        realm.executeTransaction { setContactFields(contact, name, email, phone) }
         realm.close()
     }
 
@@ -47,9 +47,9 @@ class ContactsLocalDataSource : ContactsDataSource {
         realm.close()
     }
 
-    private fun setContactFields(contact: ContactRealm?, name: String, age: Int, sex: String) {
+    private fun setContactFields(contact: ContactRealm?, name: String, email: String, phone: String) {
         contact?.name = name
-        contact?.age = age
-        contact?.sex = sex
+        contact?.email = email
+        contact?.phone = phone
     }
 }

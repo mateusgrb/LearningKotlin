@@ -7,8 +7,8 @@ import com.example.learningkotlin.data.models.Contact
  */
 interface ContactsDataSource {
 
-    fun insertContact(name: String, age: Int, sex: String)
-    fun updateContact(id: Long, name: String, age: Int, sex: String)
+    fun insertContact(name: String, email: String, phone: String)
+    fun updateContact(id: Long, name: String, email: String, phone: String)
     fun getContacts(): List<Contact>
     fun deleteContacts(contacts: List<Contact>)
 }
