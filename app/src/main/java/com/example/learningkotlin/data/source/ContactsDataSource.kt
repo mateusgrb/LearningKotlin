@@ -1,5 +1,6 @@
 package com.example.learningkotlin.data.source
 
+import android.net.Uri
 import com.example.learningkotlin.data.models.Contact
 
 /**
@@ -7,8 +8,14 @@ import com.example.learningkotlin.data.models.Contact
  */
 interface ContactsDataSource {
 
-    fun insertContact(name: String, email: String, phone: String)
-    fun updateContact(id: Long, name: String, email: String, phone: String)
+    fun insertContact(contact: Contact)
+    fun updateContact(contact: Contact)
     fun getContacts(): List<Contact>
     fun deleteContacts(contacts: List<Contact>)
+    fun uploadImage(imageUri: Uri, listener: UploadResultListener)
+
+    interface UploadResultListener {
+        fun onSuccess(downloadUrl: Uri?)
+        fun onError(exception: Exception)
+    }
 }

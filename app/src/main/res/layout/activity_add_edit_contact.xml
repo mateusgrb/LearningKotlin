@@ -71,6 +71,25 @@
             android:layout_marginTop="40dp"
             android:text="@string/save"
             app:layout_constraintLeft_toLeftOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/selectImageButton"/>
+
+        <Button
+            android:id="@+id/selectImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/select_image"
+            app:layout_constraintLeft_toLeftOf="@+id/textInputLayout"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"/>
+
+        <TextView
+            android:id="@+id/imagePathTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/selectImageButton"
+            app:layout_constraintLeft_toRightOf="@+id/selectImageButton"
+            tools:text="Image path"
+            />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -1,5 +1,8 @@
 package com.example.learningkotlin.addeditcontact
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
@@ -12,27 +15,47 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
 
     companion object {
         val EXTRA_CONTACT = "CONTACT"
+        val REQUEST_CODE_SELECT_IMAGE = 101
     }
 
     private val presenter = AddEditContactPresenter(this)
+    private var imageUri: Uri? = null
+    private var contact: Contact? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_contact)
 
-        saveButton.onClick {
-            presenter.saveContact(nameEditText.text.toString(), emailEditText.text
-                    .toString(), phoneEditText.text.toString())
+        selectImageButton.onClick {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_SELECT_IMAGE)
         }
 
-        val contact = intent.getSerializableExtra(EXTRA_CONTACT) as Contact?
-        if (contact != null) {
-            with(contact) {
-                presenter.contactId = id
-                nameEditText.setText(name)
-                emailEditText.setText(email)
-                phoneEditText.setText(phone)
+        saveButton.onClick {
+            if (contact == null) {
+                contact = Contact.newInstance()
             }
+            contact?.name = nameEditText.text.toString()
+            contact?.email = emailEditText.text.toString()
+            contact?.phone = phoneEditText.text.toString()
+            presenter.saveContact(contact!!, imageUri)
+        }
+
+        contact = intent.getSerializableExtra(EXTRA_CONTACT) as Contact?
+        if (contact != null) {
+            nameEditText.setText(contact?.name)
+            emailEditText.setText(contact?.email)
+            phoneEditText.setText(contact?.phone)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == Activity.RESULT_OK) {
+            imageUri = data?.data
+            imagePathTextView.text = imageUri?.path
+            presenter.onImageSelected()
         }
     }
 

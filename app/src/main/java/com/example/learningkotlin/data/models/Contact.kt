@@ -12,4 +12,8 @@ interface Contact : Serializable {
     var email: String
     var phone: String
     var pictureUrl: String
+
+    companion object {
+        fun newInstance(): Contact = ContactRealm()
+    }
 }

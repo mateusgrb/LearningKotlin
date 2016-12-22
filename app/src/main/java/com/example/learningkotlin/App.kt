@@ -1,6 +1,7 @@
 package com.example.learningkotlin
 
 import android.app.Application
+import android.content.Context
 import com.squareup.leakcanary.LeakCanary
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -11,6 +12,10 @@ import io.realm.RealmConfiguration
 
 class App : Application() {
 
+    companion object {
+        var context: Context? = null
+    }
+
     override fun onCreate() {
         super.onCreate()
         if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -19,7 +24,7 @@ class App : Application() {
             return
         }
         LeakCanary.install(this)
-
+        context = applicationContext
         Realm.init(this)
         val config = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
         Realm.setDefaultConfiguration(config)

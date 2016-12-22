@@ -7,4 +7,5 @@
     <string name="delete_contacts">Delete contacts</string>
 
     <string name="field_error">Please, fill in a valid %1$s</string>
+    <string name="select_image">Select Image</string>
 </resources>
