@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import com.example.learningkotlin.R
+import com.example.learningkotlin.business.EventSender
 import com.example.learningkotlin.data.models.Contact
+import com.example.learningkotlin.data.source.ContactsRepository
+import com.example.learningkotlin.utils.Validator
 import kotlinx.android.synthetic.main.activity_add_edit_contact.*
 import org.jetbrains.anko.onClick
 
@@ -18,7 +21,7 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         val REQUEST_CODE_SELECT_IMAGE = 101
     }
 
-    private val presenter = AddEditContactPresenter(this)
+    private val presenter = AddEditContactPresenter(this, ContactsRepository(), Validator(), EventSender())
     private var imageUri: Uri? = null
     private var contact: Contact? = null
 

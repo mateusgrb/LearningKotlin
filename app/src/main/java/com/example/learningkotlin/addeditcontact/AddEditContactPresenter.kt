@@ -2,29 +2,31 @@ package com.example.learningkotlin.addeditcontact
 
 import android.net.Uri
 import android.util.Log
+import com.example.learningkotlin.business.EventSender
 import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.ContactsDataSource
-import com.example.learningkotlin.data.source.ContactsRepository
 import com.example.learningkotlin.events.RefreshListEvent
 import com.example.learningkotlin.utils.Validator
-import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 /**
  * Created by mateus on 09/11/16.
  */
 
-class AddEditContactPresenter(private var view: AddEditContactContract.View?) :
+class AddEditContactPresenter(view: AddEditContactContract.View?, private val repository:
+ContactsDataSource, private val validator: Validator, private val eventSender: EventSender) :
         AddEditContactContract.Presenter {
 
-    private val repository: ContactsRepository = ContactsRepository()
+    var view: AddEditContactContract.View? = view
+        private set
     private var newImageSelected = false
 
     override fun saveContact(contact: Contact, imageUri: Uri?) {
-        if (!Validator.validateContactName(contact.name)) {
+        if (!validator.validateContactName(contact.name)) {
             view?.showContactNameError()
-        } else if (!Validator.validateContactEmail(contact.email)) {
+        } else if (!validator.validateContactEmail(contact.email)) {
             view?.showContactEmailError()
-        } else if (!Validator.validateContactPhone(contact.phone)) {
+        } else if (!validator.validateContactPhone(contact.phone)) {
             view?.showContactPhoneError()
         } else {
             if (newImageSelected && imageUri != null) {
@@ -58,7 +60,7 @@ class AddEditContactPresenter(private var view: AddEditContactContract.View?) :
         } else {
             repository.insertContact(contact)
         }
-        EventBus.getDefault().post(RefreshListEvent())
+        eventSender.send(RefreshListEvent())
         view?.onContactSaved()
     }
 }

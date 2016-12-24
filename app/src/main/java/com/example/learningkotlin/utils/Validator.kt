@@ -7,18 +7,16 @@ import android.text.TextUtils
  * Created by mateus on 10/11/16.
  */
 class Validator {
-    companion object {
-        fun validateContactName(name: String?): Boolean {
-            return !TextUtils.isEmpty(name)
-        }
+    fun validateContactName(name: String?): Boolean {
+        return !TextUtils.isEmpty(name)
+    }
 
-        fun validateContactEmail(email: String?): Boolean {
-            return !TextUtils.isEmpty(email) &&
-                    android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        }
+    fun validateContactEmail(email: String?): Boolean {
+        return !TextUtils.isEmpty(email) &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 
-        fun validateContactPhone(phone: String?): Boolean {
-            return PhoneNumberUtils.isGlobalPhoneNumber(phone)
-        }
+    fun validateContactPhone(phone: String?): Boolean {
+        return PhoneNumberUtils.isGlobalPhoneNumber(phone)
     }
 }
