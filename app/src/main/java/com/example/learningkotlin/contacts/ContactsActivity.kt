@@ -105,9 +105,9 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         startActivity<AddEditContactActivity>()
     }
 
-    override fun refreshList(updatedContacts: List<Contact>) {
-        contacts.clear()
-        contacts.addAll(updatedContacts)
+    override fun refreshList(contacts: List<Contact>) {
+        this.contacts.clear()
+        this.contacts.addAll(contacts)
         adapter.notifyDataSetChanged()
     }
 

@@ -7,7 +7,6 @@ import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.ContactsDataSource
 import com.example.learningkotlin.events.RefreshListEvent
 import com.example.learningkotlin.utils.Validator
-import java.io.File
 
 /**
  * Created by mateus on 09/11/16.

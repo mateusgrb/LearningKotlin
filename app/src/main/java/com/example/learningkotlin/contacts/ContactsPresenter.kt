@@ -31,8 +31,8 @@ class ContactsPresenter(private var view: ContactsContract.View?) : ContactsCont
         return repository.getContacts()
     }
 
-    override fun deleteContacts(contacts: List<Contact>) {
-        repository.deleteContacts(contacts)
+    override fun deleteContacts(contactsToBeDeleted: List<Contact>) {
+        repository.deleteContacts(contactsToBeDeleted)
         view?.refreshList(getContacts())
     }
 
