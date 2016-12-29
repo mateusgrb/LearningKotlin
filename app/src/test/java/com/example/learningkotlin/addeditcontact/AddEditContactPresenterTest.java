@@ -2,7 +2,7 @@ package com.example.learningkotlin.addeditcontact;
 
 import android.net.Uri;
 
-import com.example.learningkotlin.business.EventSender;
+import com.example.learningkotlin.business.EventHandler;
 import com.example.learningkotlin.data.models.Contact;
 import com.example.learningkotlin.data.source.ContactsDataSource;
 import com.example.learningkotlin.utils.Validator;
@@ -12,12 +12,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.io.File;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -41,7 +38,7 @@ public class AddEditContactPresenterTest {
     private Validator validator;
 
     @Mock
-    private EventSender eventSender;
+    private EventHandler eventHandler;
 
     @Mock
     private Uri uri;

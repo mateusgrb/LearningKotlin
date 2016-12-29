@@ -1,25 +1,27 @@
 package com.example.learningkotlin.contacts
 
+import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.models.Contact
-import com.example.learningkotlin.data.source.ContactsRepository
+import com.example.learningkotlin.data.source.ContactsDataSource
 import com.example.learningkotlin.events.RefreshListEvent
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by mateus on 08/11/16.
  */
-class ContactsPresenter(private var view: ContactsContract.View?) : ContactsContract.Presenter {
+class ContactsPresenter(view: ContactsContract.View?, private val repository:
+ContactsDataSource, private val eventHandler: EventHandler) : ContactsContract.Presenter {
 
-    val repository: ContactsRepository = ContactsRepository()
+    var view: ContactsContract.View? = view
+        private set
 
     init {
-        EventBus.getDefault().register(this)
+        eventHandler.register(this)
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().unregister(this)
+        eventHandler.unregister(this)
         view = null
     }
 

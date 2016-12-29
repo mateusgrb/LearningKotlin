@@ -9,7 +9,9 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.learningkotlin.R
 import com.example.learningkotlin.addeditcontact.AddEditContactActivity
+import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.models.Contact
+import com.example.learningkotlin.data.source.ContactsRepository
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
@@ -23,7 +25,8 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         val EXTRA_SELECTED_POSITIONS = "SELECTED_POSITIONS"
     }
 
-    private val presenter: ContactsContract.Presenter = ContactsPresenter(this)
+    private val presenter: ContactsContract.Presenter = ContactsPresenter(this,
+            ContactsRepository(), EventHandler())
     private var actionMode: ActionMode? = null
     private val contacts = presenter.getContacts().toMutableList()
 

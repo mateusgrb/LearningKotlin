@@ -1,6 +1,6 @@
 package com.example.learningkotlin.addeditcontact
 
-import com.example.learningkotlin.business.EventSender
+import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.source.ContactsDataSource
 import com.example.learningkotlin.data.source.ContactsRepository
 import com.example.learningkotlin.utils.Validator
@@ -20,9 +20,9 @@ class AddEditContactPresenterModule(val view: AddEditContactContract.View) {
 
     @Provides @Singleton fun provideValidator(): Validator = Validator()
 
-    @Provides @Singleton fun provideEventSender() = EventSender()
+    @Provides @Singleton fun provideEventHandler() = EventHandler()
 
     @Provides @Singleton fun providePresenter(view: AddEditContactContract.View, repository:
-    ContactsDataSource, validator: Validator, eventSender: EventSender): AddEditContactContract.Presenter =
-            AddEditContactPresenter(view, repository, validator, eventSender)
+    ContactsDataSource, validator: Validator, eventHandler: EventHandler): AddEditContactContract.Presenter =
+            AddEditContactPresenter(view, repository, validator, eventHandler)
 }

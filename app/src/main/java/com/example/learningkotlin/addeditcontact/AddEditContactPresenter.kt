@@ -2,7 +2,7 @@ package com.example.learningkotlin.addeditcontact
 
 import android.net.Uri
 import android.util.Log
-import com.example.learningkotlin.business.EventSender
+import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.ContactsDataSource
 import com.example.learningkotlin.events.RefreshListEvent
@@ -13,7 +13,7 @@ import com.example.learningkotlin.utils.Validator
  */
 
 class AddEditContactPresenter(view: AddEditContactContract.View?, private val repository:
-ContactsDataSource, private val validator: Validator, private val eventSender: EventSender) :
+ContactsDataSource, private val validator: Validator, private val eventHandler: EventHandler) :
         AddEditContactContract.Presenter {
 
     var view: AddEditContactContract.View? = view
@@ -59,7 +59,7 @@ ContactsDataSource, private val validator: Validator, private val eventSender: E
         } else {
             repository.insertContact(contact)
         }
-        eventSender.send(RefreshListEvent())
+        eventHandler.send(RefreshListEvent())
         view?.onContactSaved()
     }
 }
