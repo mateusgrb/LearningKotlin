@@ -10,5 +10,5 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AddEditContactPresenterModule::class))
 interface AddEditContactComponent {
 
-    fun getPresenter(): AddEditContactContract.Presenter
+    fun inject(activity: AddEditContactActivity)
 }

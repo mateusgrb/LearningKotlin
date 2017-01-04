@@ -28,7 +28,7 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_contact)
 
-        presenter = DaggerAddEditContactComponent.builder().addEditContactPresenterModule(AddEditContactPresenterModule(this)).build().getPresenter()
+        DaggerAddEditContactComponent.builder().addEditContactPresenterModule(AddEditContactPresenterModule(this)).build().inject(this)
 
         selectImageButton.onClick {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
