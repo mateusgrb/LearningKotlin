@@ -25,15 +25,10 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         val EXTRA_SELECTED_POSITIONS = "SELECTED_POSITIONS"
     }
 
-    private val presenter: ContactsContract.Presenter = ContactsPresenter(this,
-            ContactsRepository(), EventHandler())
+    private lateinit var presenter: ContactsContract.Presenter
     private var actionMode: ActionMode? = null
-    private val contacts = presenter.getContacts().toMutableList()
-
-    private var adapter = ContactsAdapter(contacts, {
-        actionMode ?: startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to
-                it)
-    }, { contact -> handleOnLongClick(contact) })
+    private lateinit var contacts: MutableList<Contact>
+    private lateinit var adapter: ContactsAdapter
 
     private val callback = object : ActionMode.Callback {
         override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
@@ -68,6 +63,13 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
+
+        presenter = ContactsPresenter(this, ContactsRepository(this), EventHandler())
+        contacts = presenter.getContacts().toMutableList()
+        adapter = ContactsAdapter(contacts, {
+            actionMode ?: startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to
+                    it)
+        }, { contact -> handleOnLongClick(contact) })
 
         contactsList.layoutManager = LinearLayoutManager(this)
         contactsList.setHasFixedSize(true)

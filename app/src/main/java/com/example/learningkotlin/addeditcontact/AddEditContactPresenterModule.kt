@@ -1,5 +1,6 @@
 package com.example.learningkotlin.addeditcontact
 
+import android.content.Context
 import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.source.ContactsDataSource
 import com.example.learningkotlin.data.source.ContactsRepository
@@ -16,7 +17,8 @@ class AddEditContactPresenterModule(val view: AddEditContactContract.View) {
 
     @Provides @Singleton fun provideView() = view
 
-    @Provides fun provideContactsDataSource() : ContactsDataSource = ContactsRepository()
+    @Provides fun provideContactsDataSource(context: Context): ContactsDataSource =
+            ContactsRepository(context)
 
     @Provides @Singleton fun provideValidator(): Validator = Validator()
 

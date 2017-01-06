@@ -1,7 +1,7 @@
 package com.example.learningkotlin.data.source.remote
 
+import android.content.Context
 import android.net.Uri
-import com.example.learningkotlin.App
 import com.example.learningkotlin.R
 import com.example.learningkotlin.data.source.ContactsDataSource
 import com.google.firebase.storage.FirebaseStorage
@@ -11,7 +11,7 @@ import java.util.*
  * Created by mateus on 16/12/16.
  */
 
-class ContactsFirebaseDataSource {
+class ContactsFirebaseDataSource(val context: Context) {
 
     companion object {
         private val IMAGES_DIR = "images"
@@ -20,7 +20,7 @@ class ContactsFirebaseDataSource {
 
     fun uploadImage(imageUri: Uri, listener: ContactsDataSource.UploadResultListener) {
         val storage = FirebaseStorage.getInstance()
-        val root = storage.getReferenceFromUrl(App.context?.getString(R.string.firebase_url) ?: "")
+        val root = storage.getReferenceFromUrl(context.getString(R.string.firebase_url) ?: "")
         val fileName = UUID.randomUUID().toString() + IMAGE_EXTENSION
         val fileReference = root.child(IMAGES_DIR).child(fileName)
         val uploadTask = fileReference.putFile(imageUri)

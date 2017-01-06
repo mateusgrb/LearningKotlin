@@ -1,17 +1,25 @@
 package com.example.learningkotlin.data.source
 
+import android.content.Context
 import android.net.Uri
+import com.example.learningkotlin.AppModule
 import com.example.learningkotlin.data.models.Contact
 import com.example.learningkotlin.data.source.local.ContactsLocalDataSource
 import com.example.learningkotlin.data.source.remote.ContactsFirebaseDataSource
+import javax.inject.Inject
 
 /**
  * Created by mateus on 10/11/16.
  */
-class ContactsRepository : ContactsDataSource {
+class ContactsRepository(val context: Context) : ContactsDataSource {
 
-    val localDataSource: ContactsLocalDataSource = ContactsLocalDataSource()
-    val remoteDataSource: ContactsFirebaseDataSource = ContactsFirebaseDataSource()
+    @Inject lateinit var localDataSource: ContactsLocalDataSource
+    @Inject lateinit var remoteDataSource: ContactsFirebaseDataSource
+
+    init {
+        DaggerContactsRepositoryComponent.builder().appModule(AppModule(context))
+                .contactsRepositoryModule(ContactsRepositoryModule()).build().inject(this)
+    }
 
     override fun insertContact(contact: Contact) {
         localDataSource.insertContact(contact)

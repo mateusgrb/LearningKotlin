@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
+import com.example.learningkotlin.AppModule
 import com.example.learningkotlin.R
 import com.example.learningkotlin.data.models.Contact
 import kotlinx.android.synthetic.main.activity_add_edit_contact.*
@@ -28,7 +29,8 @@ class AddEditContactActivity : AppCompatActivity(), AddEditContactContract.View 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_contact)
 
-        DaggerAddEditContactComponent.builder().addEditContactPresenterModule(AddEditContactPresenterModule(this)).build().inject(this)
+        DaggerAddEditContactComponent.builder().appModule(AppModule(this))
+                .addEditContactPresenterModule(AddEditContactPresenterModule(this)).build().inject(this)
 
         selectImageButton.onClick {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
