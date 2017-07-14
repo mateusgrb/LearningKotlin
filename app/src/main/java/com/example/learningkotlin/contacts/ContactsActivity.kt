@@ -7,15 +7,15 @@ import android.util.SparseBooleanArray
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import com.example.learningkotlin.AppModule
 import com.example.learningkotlin.R
 import com.example.learningkotlin.addeditcontact.AddEditContactActivity
-import com.example.learningkotlin.business.EventHandler
 import com.example.learningkotlin.data.models.Contact
-import com.example.learningkotlin.data.source.ContactsRepository
 import kotlinx.android.synthetic.main.activity_contacts.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.startActivity
 import java.util.*
+import javax.inject.Inject
 
 
 class ContactsActivity : AppCompatActivity(), ContactsContract.View {
@@ -25,7 +25,7 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         val EXTRA_SELECTED_POSITIONS = "SELECTED_POSITIONS"
     }
 
-    private lateinit var presenter: ContactsContract.Presenter
+    @Inject lateinit var presenter: ContactsContract.Presenter
     private var actionMode: ActionMode? = null
     private lateinit var contacts: MutableList<Contact>
     private lateinit var adapter: ContactsAdapter
@@ -64,7 +64,8 @@ class ContactsActivity : AppCompatActivity(), ContactsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
 
-        presenter = ContactsPresenter(this, ContactsRepository(this), EventHandler())
+        DaggerContactsComponent.builder().appModule(AppModule(this))
+                .contactsPresenterModule(ContactsPresenterModule(this)).build().inject(this)
         contacts = presenter.getContacts().toMutableList()
         adapter = ContactsAdapter(contacts, {
             actionMode ?: startActivity<AddEditContactActivity>(AddEditContactActivity.EXTRA_CONTACT to

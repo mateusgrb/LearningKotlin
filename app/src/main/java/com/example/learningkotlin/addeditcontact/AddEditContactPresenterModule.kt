@@ -7,7 +7,6 @@ import com.example.learningkotlin.data.source.ContactsRepository
 import com.example.learningkotlin.utils.Validator
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 /**
  * Created by mateus on 25/12/16.
@@ -15,16 +14,16 @@ import javax.inject.Singleton
 @Module
 class AddEditContactPresenterModule(val view: AddEditContactContract.View) {
 
-    @Provides @Singleton fun provideView() = view
+    @Provides fun provideView() = view
 
     @Provides fun provideContactsDataSource(context: Context): ContactsDataSource =
             ContactsRepository(context)
 
-    @Provides @Singleton fun provideValidator(): Validator = Validator()
+    @Provides fun provideValidator(): Validator = Validator()
 
-    @Provides @Singleton fun provideEventHandler() = EventHandler()
+    @Provides fun provideEventHandler() = EventHandler()
 
-    @Provides @Singleton fun providePresenter(view: AddEditContactContract.View, repository:
+    @Provides fun providePresenter(view: AddEditContactContract.View, repository:
     ContactsDataSource, validator: Validator, eventHandler: EventHandler): AddEditContactContract.Presenter =
             AddEditContactPresenter(view, repository, validator, eventHandler)
 }
